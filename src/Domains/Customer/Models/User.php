@@ -2,12 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Domains\Customer\Model;
+namespace Domains\Customer\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
-use Domains\Customer\Model\Concerns\HasUuid;
+use Database\Factories\UserFactory;
+use Domains\Customer\Models\Concerns\HasUuid;
 use Domains\Customer\Models\Address;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -33,6 +35,11 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    protected static function newFactory(): Factory
+    {
+        return UserFactory::new();
+    }
 
     public function addresses(): HasMany
     {

@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Domains\Customer\Models;
 
+use Database\Factories\AddressFactory;
 use Domains\Customer\Models\User;
 use Domains\Customer\Models\Location;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -24,6 +26,11 @@ class Address extends Model
     protected $cast = [
         'billing' => 'boolean',
     ];
+
+    protected static function newFactory(): Factory
+    {
+        return AddressFactory::new();
+    }
 
 
     public function user(): BelongsTo
