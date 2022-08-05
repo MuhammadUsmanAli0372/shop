@@ -7,7 +7,7 @@ namespace Domains\Customer\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 use Database\Factories\UserFactory;
-use Domains\Customer\Models\Concerns\HasUuid;
+use Domains\Shared\Models\Concerns\HasUuid;
 use Domains\Customer\Models\Address;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
