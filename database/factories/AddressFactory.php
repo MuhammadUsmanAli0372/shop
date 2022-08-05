@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace {{ factoryNamespace }};
+namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class {{ factory }}Factory extends Factory
+class AddressFactory extends Factory
 {
     public function definition(): array
     {
