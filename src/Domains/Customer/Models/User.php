@@ -11,6 +11,7 @@ use Domains\Customer\Models\Concerns\HasUuid;
 use Domains\Customer\Models\Address;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -29,12 +30,30 @@ class User extends Authenticatable
         'last_name',
         'email',
         'password',
+        'billing_id',
+        'shipping_id'
     ];
 
     protected $hidden = [
         'password',
         'remember_token',
     ];
+
+    public function shipping(): BelongsTo
+    {
+        return $this->belongsTo(
+            related: Address::class,
+            foreignKey: 'shipping_id'
+        );
+    }
+
+    public function billing(): BelongsTo
+    {
+        return $this->belongsTo(
+            related: Address::class,
+            foreignKey: 'billing_id'
+        );
+    }
 
     protected static function newFactory(): Factory
     {
