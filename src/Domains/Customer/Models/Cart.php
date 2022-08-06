@@ -2,46 +2,41 @@
 
 declare(strict_types=1);
 
-namespace Domains\Catalog\Models;
+namespace Domains\Customer\Models;
 
-use Database\Factories\VariantFactory;
+use Database\Factories\CartFactory;
+use Domains\Customer\States\Statuses\CartStatus;
 use Domains\Shared\Models\Concerns\HasKey;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Variant extends Model
+class Cart extends Model
 {
     use HasKey;
     use HasFactory;
 
     protected $fillable = [
         'key',
-        'name',
-        'cost',
-        'retail',
-        'height',
-        'width',
-        'length',
-        'weight',
-        'active',
-        'shippable',
-        'product_id'
+        'status',
+        'coupon',
+        'total',
+        'reduction',
+        'user_id'
     ];
 
     protected $cast = [
-        'active' => 'boolean',
-        'shippable' => 'boolean',
+        'status' => CartStatus::class. ':nullable',
     ];
 
-    public function product(): BelongsTo
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(User::class);
     }
 
     protected static function newFactory(): Factory
     {
-        return VariantFactory::new();
+        return CartFactory::new();
     }
 }

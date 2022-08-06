@@ -17,5 +17,10 @@ Route::prefix('products')->as('products:')->group(function () {
     Route::get(
         uri: '/',
         action: App\Http\Controllers\Api\V1\Products\IndexController::class,
+    )->name('index');
+
+    Route::get(
+        uri: '{key}',
+        action: App\Http\Controllers\Api\V1\Products\ShowController::class,
     )->name('show');
 });

@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Product extends Model
 {
@@ -32,6 +33,7 @@ class Product extends Model
 
     protected $cast = [
         'active' => 'boolean',
+        'vat' => 'boolean',
     ];
 
     public function category(): BelongsTo
@@ -42,6 +44,11 @@ class Product extends Model
     public function range(): BelongsTo
     {
         return $this->belongsTo(Range::class);
+    }
+
+    public function variants(): HasMany
+    {
+        return $this->hasMany(Variant::class);
     }
 
     public function newEloquentBuilder($query): Builder
