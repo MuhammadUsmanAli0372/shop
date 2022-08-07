@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Domains\Customer\Models;
 
-use Database\Factories\CartFactory;
-use Domains\Customer\States\Statuses\CartStatus;
+use Database\Factories\OrderFactory;
 use Domains\Shared\Models\Concerns\HasKey;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,22 +12,28 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Cart extends Model
+class Order extends Model
 {
     use HasKey;
     use HasFactory;
 
     protected $fillable = [
         'key',
-        'status',
+        'number',
+        'state',
         'coupon',
         'total',
         'reduction',
-        'user_id'
+        'user_id',
+        'shipping_id',
+        'billing_id',
+        'completed_at',
+        'cancelled_at'
     ];
 
     protected $cast = [
-        'status' => CartStatus::class. ':nullable',
+        'completed_at' => 'datetime',
+        'cancelled_at' => 'datetime'
     ];
 
     public function user(): BelongsTo
@@ -36,13 +41,23 @@ class Cart extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function items(): HasMany
+    public function shipping(): BelongsTo
     {
-        return $this->hasMany(CartItem::class);
+        return $this->belongsTo(Location::class);
+    }
+
+    public function billing(): BelongsTo
+    {
+        return $this->belongsTo(Location::class);
+    }
+
+    public function linetimes(): HasMany
+    {
+        return $this->hasMany(OrderLine::class);
     }
 
     protected static function newFactory(): Factory
     {
-        return CartFactory::new();
+        return OrderFactory::new();
     }
 }
