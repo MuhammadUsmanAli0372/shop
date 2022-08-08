@@ -1,21 +1,31 @@
 <?php
 
-namespace Tests\Feature;
+declare(strict_types=1);
 
-// use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use JustSteveKing\StatusCode\Http;
 
-class ExampleTest extends TestCase
-{
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
-    public function test_the_application_returns_a_successful_response()
-    {
-        $response = $this->get('/');
+use function Pest\Laravel\get;
 
-        $response->assertStatus(200);
-    }
-}
+// test('asserts true is true', function () {
+//     $this->assertTrue(true);
+
+//     dd("Usma");
+
+//     expect(true)->toBeTrue();
+// });
+
+// it('has home', function () {
+//     get('/')->assertStatus(200);
+
+//     // Same as:
+//     $this->get('/')->assertStatus(200);
+// });
+
+
+it('receives a HTTP OK on the home page', function() {
+    get(
+        uri: route('home')
+        )->assertStatus(
+            Http::OK
+        );
+});
