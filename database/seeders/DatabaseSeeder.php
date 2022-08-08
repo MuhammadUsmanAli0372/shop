@@ -12,6 +12,7 @@ use Domains\Catalog\Models\Range;
 use Domains\Catalog\Models\Variant;
 use Domains\Customer\Models\Address;
 use Domains\Customer\Models\Cart;
+use Domains\Customer\Models\Coupon;
 use Domains\Customer\Models\Location;
 use Domains\Customer\Models\Order;
 use Domains\Customer\Models\OrderLine;
@@ -30,5 +31,6 @@ class DatabaseSeeder extends Seeder
         // Cart::factory(10)->create();
         // Order::factory(50)->create();
         OrderLine::factory(20)->create();
+        Coupon::factory(20)->create();
     }
 }
