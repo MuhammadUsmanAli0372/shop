@@ -19,7 +19,7 @@ class CartFactory extends Factory
         $useCoupon = $this->faker->boolean;
         return [
             'status' => Arr::random(
-                array: ['pending', 'complete', 'abandoned'],
+                array: CartStatus::toLabels(),
             ),
             'coupon' => $useCoupon ? $this->faker->imei() : null,
             'total' => $this->faker->numberBetween(10000, 100000),

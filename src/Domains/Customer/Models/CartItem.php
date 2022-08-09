@@ -19,6 +19,7 @@ class CartItem extends Model
 
     protected $fillable = [
         'key',
+        'quantity',
         'purchasable_id',
         'purchasable_type',
         'cart_id'
@@ -31,7 +32,7 @@ class CartItem extends Model
 
     public function purchasable(): MorphTo
     {
-    return $this->morphTo();
+        return $this->morphTo();
     }
 
     protected static function newFactory(): Factory

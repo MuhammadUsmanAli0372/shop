@@ -7,6 +7,7 @@ namespace Database\Factories;
 use Domains\Customer\Models\Location;
 use Domains\Customer\Models\Order;
 use Domains\Customer\Models\User;
+use Domains\Customer\States\Statuses\OrderStatus;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Arr;
 
@@ -18,9 +19,9 @@ class OrderFactory extends Factory
     {
         $useCoupon = $this->faker->boolean;
         $state = Arr::random(
-            array: ['cancelled', 'completed', 'pending', 'refunded'],
+            array: OrderStatus::toLabels(),
         );
-        
+
         return [
             'number' => $this->faker->bothify(
                 string: 'ORD-####-####-####',
