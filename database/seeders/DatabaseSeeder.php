@@ -22,15 +22,15 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        // Location::factory(50)->create();
-        // Address::factory()->create();
-        // Category::factory(10)->create();
-        // Range::factory(10)->create();
-        // Product::factory(50)->create();
-        Variant::factory(50)->create();
-        // Cart::factory(10)->create();
-        // Order::factory(50)->create();
-        OrderLine::factory(20)->create();
-        Coupon::factory(20)->create();
+        Location::factory(5)->create();
+        Address::factory()->create();
+        Category::factory(5)->create();
+        Range::factory(5)->create();
+        Product::factory(5)->create();
+        Variant::factory(5)->create();
+        Cart::factory(5)->create();
+        Order::factory(5)->create();
+        OrderLine::factory(5)->create();
+        Coupon::factory(5)->create();
     }
 }

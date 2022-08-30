@@ -16,6 +16,7 @@ class CartAggregate extends AggregateRoot
 {
     public function addProduct(int $purchasableID, int $cartID, string $type): self
     {
+        dd($purchasableID, $cartID, $type, "Record That");
         $this->recordThat(
             domainEvent: new ProductWasAddedToCart(
                 purchasableID: $purchasableID,
