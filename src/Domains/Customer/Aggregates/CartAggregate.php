@@ -10,8 +10,6 @@ use Domains\Customer\Events\ProductWasAddedToCart;
 use Domains\Customer\Events\ProductWasRemoveFromCart;
 use Spatie\EventSourcing\AggregateRoots\AggregateRoot;
 
-use function PHPSTORM_META\type;
-
 class CartAggregate extends AggregateRoot
 {
     public function addProduct(int $purchasableID, int $cartID, string $type): self
@@ -22,7 +20,6 @@ class CartAggregate extends AggregateRoot
                 cartID: $cartID,
                 type: $type
             ),
-
         );
 
         return $this;

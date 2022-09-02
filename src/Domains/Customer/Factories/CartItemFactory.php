@@ -9,7 +9,7 @@ use Domains\Customer\ValueObjects\CartItemValueObject;
 class CartItemFactory
 {
     /**
-     * @param array $attributes
+     * @param  array  $attributes
      * @return CartItemValueObject
      */
     public static function make(array $attributes): CartItemValueObject

@@ -29,7 +29,7 @@ class CartResource extends JsonResource
                         relationship: 'items',
                     ),
                 ),
-            ]
+            ],
         ];
     }
 }

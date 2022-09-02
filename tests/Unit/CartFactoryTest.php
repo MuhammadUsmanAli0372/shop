@@ -8,7 +8,7 @@ it('can create a cart value object', function () {
         CartFactory::make(
             attributes: [
                 'status' => 'test',
-                'user_id' => 1
+                'user_id' => 1,
             ],
         ),
     )->toBeInstanceOf(class: CartValueObject::class)

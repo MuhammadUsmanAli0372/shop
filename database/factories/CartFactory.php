@@ -17,6 +17,7 @@ class CartFactory extends Factory
     public function definition(): array
     {
         $useCoupon = $this->faker->boolean;
+
         return [
             'status' => Arr::random(
                 array: CartStatus::toLabels(),

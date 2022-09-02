@@ -28,7 +28,7 @@ class Product extends Model
         'active',
         'vat',
         'category_id',
-        'range_id'
+        'range_id',
     ];
 
     protected $cast = [

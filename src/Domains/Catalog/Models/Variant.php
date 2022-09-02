@@ -30,7 +30,7 @@ class Variant extends Model
         'weight',
         'active',
         'shippable',
-        'product_id'
+        'product_id',
     ];
 
     protected $cast = [

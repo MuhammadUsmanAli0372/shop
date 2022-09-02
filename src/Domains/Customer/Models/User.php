@@ -8,7 +8,6 @@ namespace Domains\Customer\Models;
 
 use Database\Factories\UserFactory;
 use Domains\Shared\Models\Concerns\HasUuid;
-use Domains\Customer\Models\Address;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -32,7 +31,7 @@ class User extends Authenticatable
         'email',
         'password',
         'billing_id',
-        'shipping_id'
+        'shipping_id',
     ];
 
     protected $hidden = [

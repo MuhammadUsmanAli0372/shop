@@ -25,7 +25,7 @@ class OrderLine extends Model
         'quantity',
         'purchasable_id',
         'purchasable_type',
-        'order_id'
+        'order_id',
 
     ];
 

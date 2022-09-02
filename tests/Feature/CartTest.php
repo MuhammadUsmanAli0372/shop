@@ -16,8 +16,8 @@ it('creates a cart for an unauthenticated user', function () {
         uri: route(name: 'api:v1:carts:store'),
     )->assertStatus(
         status: Http::CREATED,
-    )->assertJson(fn (AssertableJson $json) =>
-        $json
+    )->assertJson(
+        fn (AssertableJson $json) => $json
             ->where(key: 'type', expected: 'cart')
             ->where(key: 'attributes.status', expected: CartStatus::pending()->value)
             ->etc()
@@ -56,7 +56,7 @@ it('can add a new product to a cart', function () {
         data: [
             'quantity' => 1,
             'purchasable_id' => $variant->id,
-            'purchasable_type' => 'variant'
+            'purchasable_type' => 'variant',
         ],
     )->assertStatus(
         status: Http::CREATED,

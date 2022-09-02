@@ -21,11 +21,11 @@ class Coupon extends Model
         'reduction',
         'uses',
         'max_uses',
-        'active'
+        'active',
     ];
 
     protected $cast = [
-        'active' => 'boolean'
+        'active' => 'boolean',
     ];
 
     protected static function newFactory(): Factory

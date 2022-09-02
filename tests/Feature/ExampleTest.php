@@ -6,11 +6,10 @@ use JustSteveKing\StatusCode\Http;
 
 use function Pest\Laravel\get;
 
-
-it('receives a HTTP OK on the home page', function() {
+it('receives a HTTP OK on the home page', function () {
     get(
         uri: route('home')
-        )->assertStatus(
-            Http::OK
-        );
+    )->assertStatus(
+        Http::OK
+    );
 });

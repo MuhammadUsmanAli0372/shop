@@ -16,7 +16,7 @@ use JustSteveKing\StatusCode\Http;
 class StoreController extends Controller
 {
     /**
-     * @param Request $request
+     * @param  Request  $request
      * @return JsonResponse
      */
     public function __invoke(Request $request): JsonResponse
@@ -25,7 +25,7 @@ class StoreController extends Controller
             cart: CartFactory::make(
                 attributes: [
                     'status' => CartStatus::pending()->value,
-                    'user_id' => auth()->id() ?? null
+                    'user_id' => auth()->id() ?? null,
                 ],
             ),
         );

@@ -18,8 +18,8 @@ class CartItemResource extends JsonResource
                 'quantity' => $this->quantity,
                 'item' => [
                     'id' => $this->purchasable_id,
-                    'type' => $this->purchasable_type
-                ]
+                    'type' => $this->purchasable_type,
+                ],
             ],
             // 'relationships' => [
             //     'cart' => new CartResource(

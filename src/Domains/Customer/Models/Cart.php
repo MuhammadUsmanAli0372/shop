@@ -6,7 +6,6 @@ namespace Domains\Customer\Models;
 
 use Database\Factories\CartFactory;
 use Domains\Customer\States\Statuses\CartStatus;
-use Domains\Shared\Models\Concerns\HasKey;
 use Domains\Shared\Models\Concerns\HasUuid;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -28,11 +27,11 @@ class Cart extends Model
         'coupon',
         'total',
         'reduction',
-        'user_id'
+        'user_id',
     ];
 
     protected $cast = [
-        'status' => CartStatus::class. ':nullable',
+        'status' => CartStatus::class.':nullable',
     ];
 
     public function user(): BelongsTo

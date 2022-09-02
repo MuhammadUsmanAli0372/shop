@@ -14,8 +14,6 @@ use Domains\Customer\Models\CartItem;
 use Illuminate\Support\Str;
 use Spatie\EventSourcing\EventHandlers\Projectors\Projector;
 
-use function PHPSTORM_META\type;
-
 class CartProjector extends Projector
 {
     public function onProductWasAddedToCart(ProductWasAddedToCart $event): void

@@ -17,16 +17,16 @@ class ProductRequest extends FormRequest
             'quantity' => [
                 'required',
                 'int',
-                'gt:0'
+                'gt:0',
             ],
             'purchasable_id' => [
                 'required',
-                'int'
+                'int',
             ],
             'purchasable_type' => [
                 'required',
                 'string',
-                'in:variant,bundle'
+                'in:variant,bundle',
             ],
         ];
     }

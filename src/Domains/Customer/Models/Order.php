@@ -28,12 +28,12 @@ class Order extends Model
         'shipping_id',
         'billing_id',
         'completed_at',
-        'cancelled_at'
+        'cancelled_at',
     ];
 
     protected $cast = [
         'completed_at' => 'datetime',
-        'cancelled_at' => 'datetime'
+        'cancelled_at' => 'datetime',
     ];
 
     public function user(): BelongsTo

@@ -7,7 +7,7 @@ use Domains\Customer\Aggregates\CartAggregate;
 use Domains\Customer\Events\ProductWasAddedToCart;
 use Domains\Customer\Models\Cart;
 
-it('can store an event for adding a product', function() {
+it('can store an event for adding a product', function () {
     expect(true)->toBeTrue();
     // $product = Variant::factory()->create();
     // $cart = Cart::factory()->create();

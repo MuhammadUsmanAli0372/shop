@@ -11,14 +11,14 @@ namespace Domains\Customer\ValueObjects;
 class CartValueObject
 {
     /**
-     * @param string $status
-     * @param null|int $userId
-     *
+     * @param  string  $status
+     * @param  null|int  $userId
      */
     public function __construct(
         public string $status,
         public null|int $userId,
-    ) {}
+    ) {
+    }
 
     /**
      * @return array<TKey,TValue>
@@ -27,7 +27,7 @@ class CartValueObject
     {
         return [
             'status' => $this->status,
-            'user_id' => $this->userId
+            'user_id' => $this->userId,
         ];
     }
 }

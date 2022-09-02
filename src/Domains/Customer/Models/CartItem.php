@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Domains\Customer\Models;
 
 use Database\Factories\CartItemFactory;
-use Domains\Shared\Models\Concerns\HasKey;
 use Domains\Shared\Models\Concerns\HasUuid;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -23,7 +22,7 @@ class CartItem extends Model
         'quantity',
         'purchasable_id',
         'purchasable_type',
-        'cart_id'
+        'cart_id',
     ];
 
     public function cart(): BelongsTo
