@@ -36,7 +36,7 @@ it('returns a cart for a logged in  user', function () {
     );
 });
 
-it('returns a not found status when a guest tries to retries their carts', function () {
+it('returns a no  content  status when a guest tries to retries their carts', function () {
     get(
         uri: route(name: 'api:v1:carts:index')
     )->assertStatus(
@@ -66,17 +66,5 @@ it('can add a new product to a cart', function () {
     expect(EloquentStoredEvent::query()->first()->event_class)->toEqual(expected: ProductWasAddedToCart::class);
     // dd(\Spatie\EventSourcing\StoredEvents\Models\EloquentStoredEvent::query()->get());
 });
-
-// do we have an active cart
-
-// add products to a cart
-
-// POST /cart/1234/products
-
-// PATCH /carts/1234/products/abcd
-
-// DELETE /carts/1234/products/abcd
-
-// when logged in we can create a cart, and it is assign to our user.
 
 // when not logged in we can create a cart, and the cart id is stored in the session variable.
