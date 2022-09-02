@@ -18,7 +18,6 @@ class StoreController extends Controller
 {
     public function __invoke(ProductRequest $request, Cart $cart): Response
     {
-        dd($request->all(), $cart);
         CartAggregate::retrieve(
             uuid: $cart->uuid,
         )->addProduct(

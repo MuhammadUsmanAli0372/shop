@@ -47,7 +47,7 @@ Route::prefix('carts')->as('carts:')->group(function () {
     /**
      * Add a product to cart
      */
-    Route::post('{uuid}/products', ProductsStoreController::class)->name('products:store');
+    Route::post('{cart:uuid}/products', ProductsStoreController::class)->name('products:store');
 
     // /**
     //  * Update Quantity

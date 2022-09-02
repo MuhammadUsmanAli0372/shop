@@ -1,10 +1,12 @@
 <?php
 
 use Domains\Catalog\Models\Variant;
+use Domains\Customer\Events\ProductWasAddedToCart;
 use Domains\Customer\Models\Cart;
 use Domains\Customer\States\Statuses\CartStatus;
 use Illuminate\Testing\Fluent\AssertableJson;
 use JustSteveKing\StatusCode\Http;
+use Spatie\EventSourcing\StoredEvents\Models\EloquentStoredEvent;
 
 use function Pest\Laravel\get;
 use function Pest\Laravel\post;
@@ -43,6 +45,9 @@ it('returns a not found status when a guest tries to retries their carts', funct
 });
 
 it('can add a new product to a cart', function () {
+    EloquentStoredEvent::query()->delete();
+    expect(EloquentStoredEvent::query()->get())->toHaveCount(count: 0);
+
     $cart = Cart::factory()->create();
     $variant = Variant::factory()->create();
 
@@ -56,6 +61,10 @@ it('can add a new product to a cart', function () {
     )->assertStatus(
         status: Http::CREATED,
     );
+
+    expect(EloquentStoredEvent::query()->get())->toHaveCount(count: 1);
+    expect(EloquentStoredEvent::query()->first()->event_class)->toEqual(expected: ProductWasAddedToCart::class);
+    // dd(\Spatie\EventSourcing\StoredEvents\Models\EloquentStoredEvent::query()->get());
 });
 
 // do we have an active cart
