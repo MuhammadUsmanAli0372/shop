@@ -1,12 +1,14 @@
 <?php
 
 use Domains\Catalog\Models\Variant;
+use Domains\Customer\Actions\CouponWasApplied;
 use Domains\Customer\Events\DecreaseCartQuantity;
 use Domains\Customer\Events\IncrementCartQuantity;
 use Domains\Customer\Events\ProductWasAddedToCart;
 use Domains\Customer\Events\ProductWasRemoveFromCart;
 use Domains\Customer\Models\Cart;
 use Domains\Customer\Models\CartItem;
+use Domains\Customer\Models\Coupon;
 use Domains\Customer\States\Statuses\CartStatus;
 use Illuminate\Testing\Fluent\AssertableJson;
 use JustSteveKing\StatusCode\Http;
@@ -152,10 +154,31 @@ it('can remove an item from the cart', function () {
     expect(EloquentStoredEvent::query()->get())->toHaveCount(count: 1);
     expect(EloquentStoredEvent::query()->first()->event_class)->toEqual(expected: ProductWasRemoveFromCart::class);
     EloquentStoredEvent::query()->delete();
+});
 
-    // dd($item);
+it('can apply a coupon to the cart', function () {
+    EloquentStoredEvent::query()->delete();
+    expect(EloquentStoredEvent::query()->get())->toHaveCount(count: 0);
 
-    // assertDeleted($item);
+    $cart = Cart::factory()->create();
+    $coupon = Coupon::factory()->create();
+
+    expect($cart)
+            ->reduction
+            ->toEqual(expected: 0);
+
+    post(
+        uri: route('api:v1:carts:coupons:store', $cart->uuid),
+        data: ['code' => $coupon->code]
+    )->assertStatus(status: Http::ACCEPTED);
+
+    expect(
+        Cart::query()->find($cart->id)
+        )->reduction->toEqual($coupon->reduction)->coupon->toEqual($coupon->code);
+
+    expect(EloquentStoredEvent::query()->get())->toHaveCount(count: 1);
+    expect(EloquentStoredEvent::query()->first()->event_class)->toEqual(expected: CouponWasApplied::class);
+    EloquentStoredEvent::query()->delete();
 });
 
 // when not logged in we can create a cart, and the cart id is stored in the session variable.

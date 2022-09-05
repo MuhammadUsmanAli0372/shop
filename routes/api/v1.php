@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\V1\Carts\Coupons\StoreController as CouponsStoreController;
 use App\Http\Controllers\Api\V1\Carts\IndexController;
 use App\Http\Controllers\Api\V1\Carts\Products\DeleteController;
 use App\Http\Controllers\Api\V1\Carts\Products\StoreController as ProductsStoreController;
@@ -58,4 +59,9 @@ Route::prefix('carts')->as('carts:')->group(function () {
      * Delete Product
      */
     Route::delete('{cart::uuid}/products/{item:uuid}', DeleteController::class)->name('products:delete');
+
+    /**
+     * Add a. coupon to our cart
+     */
+    Route::post('{cart::uuid}/coupons', CouponsStoreController::class)->name('coupons:store');
 });

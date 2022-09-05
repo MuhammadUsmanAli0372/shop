@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Domains\Customer\Projector;
 
+use Domains\Customer\Actions\CouponWasApplied;
 use Domains\Customer\Aggregates\CartAggregate;
 use Domains\Customer\Events\DecreaseCartQuantity;
 use Domains\Customer\Events\IncrementCartQuantity;
@@ -11,6 +12,7 @@ use Domains\Customer\Events\ProductWasAddedToCart;
 use Domains\Customer\Events\ProductWasRemoveFromCart;
 use Domains\Customer\Models\Cart;
 use Domains\Customer\Models\CartItem;
+use Domains\Customer\Models\Coupon;
 use Illuminate\Support\Str;
 use Spatie\EventSourcing\EventHandlers\Projectors\Projector;
 
@@ -80,6 +82,16 @@ class CartProjector extends Projector
 
         $item->update([
             'quantity' => ($item->quantity - $event->qunatity),
+        ]);
+    }
+
+    public function onCouponWasApplied(CouponWasApplied $event): void
+    {
+        $coupon = Coupon::query()->where('code', $event->code)->first();
+
+        Cart::query()->where('id',  $event->cartID)->update([
+            'coupon' => $coupon->code,
+            'reduction' => $coupon->reduction
         ]);
     }
 }
