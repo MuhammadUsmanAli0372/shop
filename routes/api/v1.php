@@ -49,13 +49,13 @@ Route::prefix('carts')->as('carts:')->group(function () {
      */
     Route::post('{cart:uuid}/products', ProductsStoreController::class)->name('products:store');
 
-    // /**
-    //  * Update Quantity
-    //  */
-    // Route::patch('{cart}/products/{cartItem}', UpdateController::class)->name('product:update');
+    /**
+     * Update Quantity
+     */
+    Route::patch('{cart:uuid}/products/{item:uuid}', UpdateController::class)->name('products:update');
 
-    // /**
-    //  * Delete Product
-    //  */
-    // Route::delete('{cart}/products/{cartItem}', DeleteController::class)->name('product:delete');
+    /**
+     * Delete Product
+     */
+    Route::delete('{cart::uuid}/products/{item:uuid}', DeleteController::class)->name('products:delete');
 });

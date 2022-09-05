@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Domains\Customer\Aggregates;
 
-use Domains\Customer\Events\DescreaseCartQuantity;
+use Domains\Customer\Events\DecreaseCartQuantity;
 use Domains\Customer\Events\IncrementCartQuantity;
 use Domains\Customer\Events\ProductWasAddedToCart;
 use Domains\Customer\Events\ProductWasRemoveFromCart;
@@ -54,7 +54,7 @@ class CartAggregate extends AggregateRoot
     public function descreaseQuantity(int $cartID, int $cartItemID, int $quantity): self
     {
         $this->recordThat(
-            domainEvent: new DescreaseCartQuantity(
+            domainEvent: new DecreaseCartQuantity(
                 cartID: $cartID,
                 cartItemId: $cartItemID,
                 qunatity: $quantity

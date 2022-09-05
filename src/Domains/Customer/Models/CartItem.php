@@ -25,6 +25,10 @@ class CartItem extends Model
         'cart_id',
     ];
 
+    protected $cast = [
+        'quantity' => 'int',
+    ];
+
     public function cart(): BelongsTo
     {
         return $this->belongsTo(Cart::class);
