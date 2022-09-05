@@ -24,6 +24,7 @@ class StoreController extends Controller
         //     'coupon' => $coupon->code,
         //     'reduction' => $coupon->reduction,
         // ]);
+
         CartAggregate::retrieve(
             uuid: $cart->uuid
         )->applyCoupon(
