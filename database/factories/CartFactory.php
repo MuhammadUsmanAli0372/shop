@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Database\Factories;
 
 use Domains\Customer\Models\Cart;
+use Domains\Customer\Models\Coupon;
 use Domains\Customer\Models\User;
 use Domains\Customer\States\Statuses\CartStatus;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -25,5 +26,17 @@ class CartFactory extends Factory
             'reduction' =>  0,
             'user_id' => User::factory()->create(),
         ];
+    }
+
+    public function withCoupon(): Factory
+    {
+        $coupon = Coupon::factory()->create();
+
+        return $this->state(
+            state: [
+                    'coupon' => $coupon->code,
+                    'reduction' => $coupon->reduction
+                ]
+        );
     }
 }

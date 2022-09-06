@@ -1,12 +1,10 @@
 <?php
 
-declare(strict_types=1);
-
-namespace {{ namespace }};
+namespace App\Http\Requests\Api\V1\Carts\Coupons;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class {{ class }} extends FormRequest
+class DeleteRequest extends FormRequest
 {
     public function authorize(): bool
     {

@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Domains\Customer\Aggregates\CartAggregate;
+use Domains\Customer\Aggregates\OrderAggregate;
 use Illuminate\Support\ServiceProvider;
 use Spatie\EventSourcing\Projectionist;
 
@@ -12,6 +13,7 @@ class EventSourcingServiceProvider extends ServiceProvider
     {
         Projectionist::addProjector([
             CartAggregate::class,
+            OrderAggregate::class,
         ]);
     }
 

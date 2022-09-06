@@ -8,6 +8,7 @@ use Spatie\Enum\Laravel\Enum;
 
 /**
  * @method static self pending()
+ * @method static self delined()
  * @method static self complete()
  * @method static self cancelled()
  * @method static self refunded()

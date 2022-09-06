@@ -1,11 +1,13 @@
 <?php
 
+use App\Http\Controllers\Api\V1\Carts\Coupons\DeleteController as CouponsDeleteController;
 use App\Http\Controllers\Api\V1\Carts\Coupons\StoreController as CouponsStoreController;
 use App\Http\Controllers\Api\V1\Carts\IndexController;
 use App\Http\Controllers\Api\V1\Carts\Products\DeleteController;
 use App\Http\Controllers\Api\V1\Carts\Products\StoreController as ProductsStoreController;
 use App\Http\Controllers\Api\V1\Carts\Products\UpdateController;
 use App\Http\Controllers\Api\V1\Carts\StoreController;
+use App\Http\Controllers\Api\V1\Orders\StoreController as OrdersStoreController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -61,7 +63,19 @@ Route::prefix('carts')->as('carts:')->group(function () {
     Route::delete('{cart::uuid}/products/{item:uuid}', DeleteController::class)->name('products:delete');
 
     /**
-     * Add a. coupon to our cart
+     * Add a coupon to our cart
      */
     Route::post('{cart::uuid}/coupons', CouponsStoreController::class)->name('coupons:store');
+
+    /**
+     * Remove a coupon to our cart
+     */
+    Route::delete('{cart::uuid}/coupons/{uuid}', CouponsDeleteController::class)->name('coupons:delete');
+});
+
+Route::prefix('orders')->as('orders:')->group(function () {
+    /**
+     * Turn a Cart into an Order
+     */
+    Route::post('/', OrdersStoreController::class)->name('store');
 });

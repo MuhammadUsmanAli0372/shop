@@ -156,33 +156,4 @@ it('can remove an item from the cart', function () {
     EloquentStoredEvent::query()->delete();
 });
 
-it('can apply a coupon to the cart', function () {
-    EloquentStoredEvent::query()->delete();
-    expect(EloquentStoredEvent::query()->get())->toHaveCount(count: 0);
-
-    $cart = Cart::factory()->create();
-    $coupon = Coupon::factory()->create();
-
-    expect($cart)
-            ->reduction
-            ->toEqual(expected: 0);
-
-    post(
-        uri: route('api:v1:carts:coupons:store', $cart->uuid),
-        data: ['code' => $coupon->code]
-    )->assertStatus(status: Http::ACCEPTED);
-
-    // expect(
-    //     Cart::query()->find($cart->id)
-    //     )
-    //     ->reduction
-    //     ->toEqual($coupon->reduction)
-    //     ->coupon
-    //     ->toEqual($coupon->code);
-
-    expect(EloquentStoredEvent::query()->get())->toHaveCount(count: 1);
-    expect(EloquentStoredEvent::query()->first()->event_class)->toEqual(expected: CouponWasApplied::class);
-    EloquentStoredEvent::query()->delete();
-});
-
 // when not logged in we can create a cart, and the cart id is stored in the session variable.

@@ -29,8 +29,6 @@ class DatabaseSeeder extends Seeder
         Product::factory(5)->create();
         Variant::factory(5)->create();
         Cart::factory(5)->create();
-        Order::factory(5)->create();
-        OrderLine::factory(5)->create();
         Coupon::factory(5)->create();
     }
 }
