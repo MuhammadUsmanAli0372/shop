@@ -51,7 +51,7 @@ class Order extends Model
         return $this->belongsTo(Location::class);
     }
 
-    public function linetimes(): HasMany
+    public function lineItems(): HasMany
     {
         return $this->hasMany(OrderLine::class);
     }

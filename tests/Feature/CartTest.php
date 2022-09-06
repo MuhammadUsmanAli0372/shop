@@ -14,7 +14,6 @@ use Illuminate\Testing\Fluent\AssertableJson;
 use JustSteveKing\StatusCode\Http;
 use Spatie\EventSourcing\StoredEvents\Models\EloquentStoredEvent;
 
-use function Pest\Laravel\assertDeleted;
 use function Pest\Laravel\delete;
 use function Pest\Laravel\get;
 use function Pest\Laravel\patch;
@@ -54,7 +53,6 @@ it('returns a no  content  status when a guest tries to retries their carts', fu
 });
 
 it('can add a new product to a cart', function () {
-    EloquentStoredEvent::query()->delete();
     expect(EloquentStoredEvent::query()->get())->toHaveCount(count: 0);
 
     $cart = Cart::factory()->create();
@@ -73,11 +71,9 @@ it('can add a new product to a cart', function () {
 
     expect(EloquentStoredEvent::query()->get())->toHaveCount(count: 1);
     expect(EloquentStoredEvent::query()->first()->event_class)->toEqual(expected: ProductWasAddedToCart::class);
-    // dd(\Spatie\EventSourcing\StoredEvents\Models\EloquentStoredEvent::query()->get());
 });
 
 it('can increase the quantity of an item in the cart', function () {
-    EloquentStoredEvent::query()->delete();
     expect(EloquentStoredEvent::query()->get())->toHaveCount(count: 0);
 
     $item = CartItem::factory()->create(['quantity' => 3]);
@@ -97,7 +93,6 @@ it('can increase the quantity of an item in the cart', function () {
 });
 
 it('can decrease the quantity of an item in the cart', function () {
-    EloquentStoredEvent::query()->delete();
     expect(EloquentStoredEvent::query()->get())->toHaveCount(count: 0);
 
     $item = CartItem::factory()->create(['quantity' => 3]);
@@ -114,11 +109,9 @@ it('can decrease the quantity of an item in the cart', function () {
 
     expect(EloquentStoredEvent::query()->get())->toHaveCount(count: 1);
     expect(EloquentStoredEvent::query()->first()->event_class)->toEqual(expected: DecreaseCartQuantity::class);
-    EloquentStoredEvent::query()->delete();
 });
 
 it('removes an item from the cart when quantity is zero', function () {
-    EloquentStoredEvent::query()->delete();
     expect(EloquentStoredEvent::query()->get())->toHaveCount(count: 0);
 
     $item = CartItem::factory()->create(['quantity' => 3]);
@@ -135,11 +128,9 @@ it('removes an item from the cart when quantity is zero', function () {
 
     expect(EloquentStoredEvent::query()->get())->toHaveCount(count: 1);
     expect(EloquentStoredEvent::query()->first()->event_class)->toEqual(expected: ProductWasRemoveFromCart::class);
-    EloquentStoredEvent::query()->delete();
 });
 
 it('can remove an item from the cart', function () {
-    EloquentStoredEvent::query()->delete();
     expect(EloquentStoredEvent::query()->get())->toHaveCount(count: 0);
 
     $item = CartItem::factory()->create(['quantity' => 3]);
@@ -153,7 +144,6 @@ it('can remove an item from the cart', function () {
 
     expect(EloquentStoredEvent::query()->get())->toHaveCount(count: 1);
     expect(EloquentStoredEvent::query()->first()->event_class)->toEqual(expected: ProductWasRemoveFromCart::class);
-    EloquentStoredEvent::query()->delete();
 });
 
 // when not logged in we can create a cart, and the cart id is stored in the session variable.

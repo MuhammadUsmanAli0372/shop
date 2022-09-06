@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Domains\Customer\Actions;
 
 use Domains\Customer\Models\Cart;
+use Domains\Customer\Models\CartItem;
 use Domains\Customer\Models\Order;
 use Domains\Customer\States\Statuses\OrderStatus;
 use Domains\Customer\ValueObjects\OrderValueObject;
@@ -18,7 +19,7 @@ class CreateOrder
                 ->where('uuid', $object->cart)
                 ->firstOrFail();
 
-        Order::query()->create([
+        $order = Order::query()->create([
             'number' => 'random-order-number',
             'state' => OrderStatus::pending()->label,
             'coupon' => $cart->coupon,
@@ -29,7 +30,17 @@ class CreateOrder
             'billing_id' => $object->billing
         ]);
 
-        // order items
+        $cart->items->each(function (CartItem $item) use ($order) {
+            $order->lineItems()->create([
+                'name' => $item->purchasable->name,
+                'description' => $item->purchasable->product->description,
+                'retail' => $item->purchasable->retail,
+                'cost' => $item->purchasable->cost,
+                'quantity' => $item->quantity,
+                'purchasable_id' => $item->purchasable->id,
+                'purchasable_type' => get_class($item->purchasable),
+            ]);
+        });
 
         // payment
     }
