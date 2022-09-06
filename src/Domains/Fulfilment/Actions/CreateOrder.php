@@ -9,6 +9,7 @@ use Domains\Customer\Models\CartItem;
 use Domains\Fulfilment\States\Statuses\OrderStatus;
 use Domains\Fulfilment\ValueObjects\OrderValueObject;
 use Domains\Fulfilment\Models\Order;
+use Domains\Fulfilment\Support\OrderNumberGenerator;
 
 class CreateOrder
 {
@@ -20,7 +21,7 @@ class CreateOrder
                 ->firstOrFail();
 
         $order = Order::query()->create([
-            'number' => 'random-order-number',
+            'number' => OrderNumberGenerator::generate(),
             'state' => OrderStatus::pending()->label,
             'coupon' => $cart->coupon,
             'total' => 12345,
