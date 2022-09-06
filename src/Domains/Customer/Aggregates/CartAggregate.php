@@ -45,7 +45,7 @@ class CartAggregate extends AggregateRoot
             domainEvent: new IncrementCartQuantity(
                 cartID: $cartID,
                 cartItemId: $cartItemID,
-                qunatity: $quantity
+                quantity: $quantity
             ),
         );
 
@@ -58,7 +58,7 @@ class CartAggregate extends AggregateRoot
             domainEvent: new DecreaseCartQuantity(
                 cartID: $cartID,
                 cartItemId: $cartItemID,
-                qunatity: $quantity
+                quantity: $quantity
             ),
         );
 

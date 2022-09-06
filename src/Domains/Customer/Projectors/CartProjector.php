@@ -85,28 +85,32 @@ class CartProjector extends Projector
 
     public function onDecreaseCartQuantity(DecreaseCartQuantity $event): void
     {
-        $item = CartItem::query()->where(
+        $cart = Cart::query()->with(['items'])->find($event->cartID);
+
+        $item = CartItem::query()->with(['cart'])->where(
             column: 'cart_id',
+            operator: '=',
             value: $event->cartID
         )->where(
             column: 'id',
+            operator: '=',
             value: $event->cartItemId
         )->first();
 
-        if ($event->quantity >= $item->qunatity) {
+        if ($event->quantity >= $item->quantity) {
             CartAggregate::retrieve(
-                uuid: Str::uuid()->toString(),
+                uuid: $item->cart->uuid,
             )->removeProduct(
                 purchasableID: $item->purchasable->id,
-                cartID: $item->cart_id,
+                cartID: $item->cart->id,
                 type: get_class($item->purchasable)
-            );
+            )->persist();
 
             return;
         }
 
         $item->update([
-            'quantity' => ($item->quantity - $event->qunatity),
+            'quantity' => $event->quantity,
         ]);
     }
 
@@ -114,7 +118,7 @@ class CartProjector extends Projector
     {
         $coupon = Coupon::query()->where('code', $event->code)->first();
 
-        Cart::query()->where('id',  $event->cartID)->update([
+        Cart::query()->where('id', '=',  $event->cartID)->update([
             'coupon' => $coupon->code,
             'reduction' => $coupon->reduction
         ]);
