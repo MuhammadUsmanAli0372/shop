@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Variant extends Model
@@ -30,7 +31,7 @@ class Variant extends Model
         'weight',
         'active',
         'shippable',
-        'product_id'
+        'product_id',
     ];
 
     protected $cast = [
@@ -56,6 +57,14 @@ class Variant extends Model
         return $this->morphMany(
             related: OrderLine::class,
             name: 'purchasable',
+        );
+    }
+
+    public function wishlists():  BelongsToMany
+    {
+        return $this->belongsToMany(
+            related: Product::class,
+            table: 'variant_wishlist',
         );
     }
 

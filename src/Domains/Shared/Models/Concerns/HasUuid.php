@@ -11,6 +11,11 @@ trait HasUuid
 {
     public static function bootHasUuid(): void
     {
-        static::creating(fn(Model $model) => $model->uuid = Str::uuid()->toString());
+        static::creating(fn (Model $model) => $model->uuid = Str::uuid()->toString());
+    }
+
+    public function getRouteName(): string
+    {
+        return 'uuid';
     }
 }

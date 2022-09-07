@@ -22,7 +22,7 @@ class CouponFactory extends Factory
             'reduction' => $this->faker->numberBetween(100, 5000),
             'uses' => $this->faker->numberBetween(1, 5000),
             'max_uses' => $this->faker->boolean() ? $max : null,
-            'active' => $this->faker->boolean()
+            'active' => $this->faker->boolean(),
         ];
     }
 }

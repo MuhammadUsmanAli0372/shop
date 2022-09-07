@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace Domains\Customer\Aggregates;
 
-use Domains\Customer\Events\DescreaseCartQuantity;
+use Domains\Customer\Actions\CouponWasApplied;
+use Domains\Customer\Events\DecreaseCartQuantity;
 use Domains\Customer\Events\IncrementCartQuantity;
 use Domains\Customer\Events\ProductWasAddedToCart;
 use Domains\Customer\Events\ProductWasRemoveFromCart;
 use Spatie\EventSourcing\AggregateRoots\AggregateRoot;
-
-use function PHPSTORM_META\type;
 
 class CartAggregate extends AggregateRoot
 {
@@ -22,7 +21,6 @@ class CartAggregate extends AggregateRoot
                 cartID: $cartID,
                 type: $type
             ),
-
         );
 
         return $this;
@@ -47,7 +45,7 @@ class CartAggregate extends AggregateRoot
             domainEvent: new IncrementCartQuantity(
                 cartID: $cartID,
                 cartItemId: $cartItemID,
-                qunatity: $quantity
+                quantity: $quantity
             ),
         );
 
@@ -57,13 +55,25 @@ class CartAggregate extends AggregateRoot
     public function descreaseQuantity(int $cartID, int $cartItemID, int $quantity): self
     {
         $this->recordThat(
-            domainEvent: new DescreaseCartQuantity(
+            domainEvent: new DecreaseCartQuantity(
                 cartID: $cartID,
                 cartItemId: $cartItemID,
-                qunatity: $quantity
+                quantity: $quantity
             ),
         );
 
+        return $this;
+    }
+
+    public function applyCoupon(int $cartID, string $code): self
+    {
+        $this->recordThat(
+            domainEvent: new CouponWasApplied(
+                cartID: $cartID,
+                code: $code
+            ),
+        );
+        
         return $this;
     }
 }
