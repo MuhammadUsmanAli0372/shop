@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\V1\Carts\Products\StoreController as ProductsStoreC
 use App\Http\Controllers\Api\V1\Carts\Products\UpdateController;
 use App\Http\Controllers\Api\V1\Carts\StoreController;
 use App\Http\Controllers\Api\V1\Orders\StoreController as OrdersStoreController;
+use App\Http\Controllers\Api\V1\Orders\StripeWebhookController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -78,4 +79,11 @@ Route::prefix('orders')->as('orders:')->group(function () {
      * Turn a Cart into an Order
      */
     Route::post('/', OrdersStoreController::class)->name('store');
+});
+
+/**
+ * Stripe Webhooks
+ */
+Route::middleware(['stripe-webhooks'])->group(function () {
+    Route::post('stripe/webhook', StripeWebhookController::class)->name('stripe-webhooks');
 });
