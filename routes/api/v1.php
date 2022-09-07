@@ -9,6 +9,9 @@ use App\Http\Controllers\Api\V1\Carts\Products\UpdateController;
 use App\Http\Controllers\Api\V1\Carts\StoreController;
 use App\Http\Controllers\Api\V1\Orders\StoreController as OrdersStoreController;
 use App\Http\Controllers\Api\V1\Orders\StripeWebhookController;
+use App\Http\Controllers\Api\V1\Wishlists\IndexController as WishlistsIndexController;
+use App\Http\Controllers\Api\V1\Wishlists\ShowController;
+use App\Http\Controllers\Api\V1\Wishlists\StoreController as WishlistsStoreController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -79,6 +82,26 @@ Route::prefix('orders')->as('orders:')->group(function () {
      * Turn a Cart into an Order
      */
     Route::post('/', OrdersStoreController::class)->name('store');
+});
+
+/**
+ * Wishlist Routes
+ */
+Route::prefix('wishlists')->as('wishlists:')->group(function () {
+    /**
+     * Get All Wishlists
+     */
+    Route::get('/', WishlistsIndexController::class)->name('index');
+
+    /**
+     * Create a new Wishlist
+     */
+    Route::post('/', WishlistsStoreController::class)->name('store');
+
+    /**
+     * Show a wishlist
+     */
+    Route::get('/{wishlist:uuid}', ShowController::class)->name('show');
 });
 
 /**
