@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Domains\Fulfilment\Models;
+namespace Domains\Customer\Models;
 
 use Database\Factories\OrderLineFactory;
 use Domains\Shared\Models\Concerns\HasKey;
@@ -25,7 +25,7 @@ class OrderLine extends Model
         'quantity',
         'purchasable_id',
         'purchasable_type',
-        'order_id',
+        'order_id'
 
     ];
 

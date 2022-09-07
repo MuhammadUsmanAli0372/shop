@@ -3,6 +3,7 @@
 namespace Domains\Customer\Models;
 
 use Database\Factories\LocationFactory;
+use Domains\Customer\Models\Address;
 use Domains\Shared\Models\Concerns\HasUuid;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

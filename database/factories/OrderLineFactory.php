@@ -19,7 +19,7 @@ class OrderLineFactory extends Factory
 
         return [
             'name' => $variant->name,
-            'description' => $variant->description,
+            'description'=> $variant->description,
             'retail' => $variant->retail,
             'cost' => $variant->cost,
             'quantity' => $this->faker->numberBetween(1, 7),

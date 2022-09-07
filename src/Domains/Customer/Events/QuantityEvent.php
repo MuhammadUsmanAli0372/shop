@@ -11,7 +11,6 @@ abstract class QuantityEvent extends ShouldBeStored
     public function __construct(
         public $cartID,
         public int $cartItemId,
-        public int $quantity,
-    ) {
-    }
+        public int $qunatity,
+    ) {}
 }
