@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Domains\Fulfilment\Models;
+namespace Domains\Customer\Models;
 
 use Database\Factories\OrderFactory;
 use Domains\Shared\Models\Concerns\HasKey;
@@ -22,19 +22,18 @@ class Order extends Model
         'number',
         'state',
         'coupon',
-        'intent_id',
         'total',
         'reduction',
         'user_id',
         'shipping_id',
         'billing_id',
         'completed_at',
-        'cancelled_at',
+        'cancelled_at'
     ];
 
     protected $cast = [
         'completed_at' => 'datetime',
-        'cancelled_at' => 'datetime',
+        'cancelled_at' => 'datetime'
     ];
 
     public function user(): BelongsTo
@@ -52,7 +51,7 @@ class Order extends Model
         return $this->belongsTo(Location::class);
     }
 
-    public function lineItems(): HasMany
+    public function linetimes(): HasMany
     {
         return $this->hasMany(OrderLine::class);
     }

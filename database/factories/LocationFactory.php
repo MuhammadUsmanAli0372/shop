@@ -6,8 +6,8 @@ namespace Database\Factories;
 
 use Domains\Customer\Models\Location;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 use JustSteveKing\LaravelPostcodes\Service\PostcodeService;
+use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Location>

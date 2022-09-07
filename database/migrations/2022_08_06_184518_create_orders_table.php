@@ -6,7 +6,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class () extends Migration {
+return new class extends Migration
+{
     public function up(): void
     {
         Schema::create('orders', function (Blueprint $table) {
@@ -16,10 +17,6 @@ return new class () extends Migration {
             $table->string('number')->unique();
             $table->string('state');
             $table->string('coupon')->nullable();
-
-            $table->string('intent_id')
-                    ->comment('intent ID is the payment intent from stripe.')
-                    ->nullable()->unique();
 
             $table->unsignedBigInteger('total')->nullable()->default(0);
             $table->unsignedBigInteger('reduction')->nullable()->default(0);
@@ -31,10 +28,10 @@ return new class () extends Migration {
             $table->timestamp('completed_at')->nullable();
             $table->timestamp('cancelled_at')->nullable();
 
+
             $table->timestamps();
         });
     }
-
     public function down(): void
     {
         Schema::dropIfExists('orders');

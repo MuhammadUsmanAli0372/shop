@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Domains\Customer\Models;
 
 use Database\Factories\AddressFactory;
+use Domains\Customer\Models\User;
+use Domains\Customer\Models\Location;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -19,7 +21,7 @@ class Address extends Model
         'label',
         'billing',
         'user_id',
-        'location_id',
+        'location_id'
     ];
 
     protected $cast = [
@@ -30,6 +32,7 @@ class Address extends Model
     {
         return AddressFactory::new();
     }
+
 
     public function user(): BelongsTo
     {

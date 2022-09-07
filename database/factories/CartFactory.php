@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Database\Factories;
 
 use Domains\Customer\Models\Cart;
-use Domains\Customer\Models\Coupon;
 use Domains\Customer\Models\User;
 use Domains\Customer\States\Statuses\CartStatus;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -17,26 +16,15 @@ class CartFactory extends Factory
 
     public function definition(): array
     {
+        $useCoupon = $this->faker->boolean;
         return [
             'status' => Arr::random(
                 array: CartStatus::toLabels(),
             ),
-            'coupon' => null,
+            'coupon' => $useCoupon ? $this->faker->imei() : null,
             'total' => $this->faker->numberBetween(10000, 100000),
-            'reduction' =>  0,
+            'reduction' => $useCoupon ? $this->faker->numberBetween(250, 2500) : 0,
             'user_id' => User::factory()->create(),
         ];
-    }
-
-    public function withCoupon(): Factory
-    {
-        $coupon = Coupon::factory()->create();
-
-        return $this->state(
-            state: [
-                    'coupon' => $coupon->code,
-                    'reduction' => $coupon->reduction
-                ]
-        );
     }
 }
