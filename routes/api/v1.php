@@ -9,6 +9,10 @@ use App\Http\Controllers\Api\V1\Carts\Products\UpdateController;
 use App\Http\Controllers\Api\V1\Carts\StoreController;
 use App\Http\Controllers\Api\V1\Orders\StoreController as OrdersStoreController;
 use App\Http\Controllers\Api\V1\Orders\StripeWebhookController;
+use App\Http\Controllers\Api\V1\Products\CreateController;
+use App\Http\Controllers\Api\V1\Products\DeleteController as ProductsDeleteController;
+use App\Http\Controllers\Api\V1\Products\StoreController as V1ProductsStoreController;
+use App\Http\Controllers\Api\V1\Products\UpdateController as ProductsUpdateController;
 use App\Http\Controllers\Api\V1\Wishlists\IndexController as WishlistsIndexController;
 use App\Http\Controllers\Api\V1\Wishlists\ShowController;
 use App\Http\Controllers\Api\V1\Wishlists\StoreController as WishlistsStoreController;
@@ -31,10 +35,38 @@ Route::prefix('products')->as('products:')->group(function () {
         action: App\Http\Controllers\Api\V1\Products\IndexController::class,
     )->name('index');
 
+    /**
+     * Get Single Product by key
+     */
     Route::get(
         uri: '{key}',
         action: App\Http\Controllers\Api\V1\Products\ShowController::class,
     )->name('show');
+
+    /**
+     * Create Product
+     */
+    Route::post(
+        uri: '/create',
+        action: V1ProductsStoreController::class
+    )->name('create');
+
+    /**
+     * Update Product
+     */
+    Route::post(
+        uri: '/update/{key}',
+        action: ProductsUpdateController::class
+    )->name('update');
+
+    /**
+     * Delete Product
+     */
+    Route::delete(
+        uri: '/delete/{products:key}',
+        action: ProductsDeleteController::class
+    )->name('delete');
+
 });
 
 /**
