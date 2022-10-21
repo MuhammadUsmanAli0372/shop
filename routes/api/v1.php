@@ -7,9 +7,13 @@ use App\Http\Controllers\Api\V1\Carts\Products\DeleteController;
 use App\Http\Controllers\Api\V1\Carts\Products\StoreController as ProductsStoreController;
 use App\Http\Controllers\Api\V1\Carts\Products\UpdateController;
 use App\Http\Controllers\Api\V1\Carts\StoreController;
+use App\Http\Controllers\Api\V1\Categories\DeleteController as CategoriesDeleteController;
+use App\Http\Controllers\Api\V1\Categories\IndexController as CategoriesIndexController;
+use App\Http\Controllers\Api\V1\Categories\ShowController as CategoriesShowController;
+use App\Http\Controllers\Api\V1\Categories\StoreController as CategoriesStoreController;
+use App\Http\Controllers\Api\V1\Categories\UpdateController as CategoriesUpdateController;
 use App\Http\Controllers\Api\V1\Orders\StoreController as OrdersStoreController;
 use App\Http\Controllers\Api\V1\Orders\StripeWebhookController;
-use App\Http\Controllers\Api\V1\Products\CreateController;
 use App\Http\Controllers\Api\V1\Products\DeleteController as ProductsDeleteController;
 use App\Http\Controllers\Api\V1\Products\StoreController as V1ProductsStoreController;
 use App\Http\Controllers\Api\V1\Products\UpdateController as ProductsUpdateController;
@@ -22,6 +26,51 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 })->name('auth:me');
+
+/**
+ * Wishlist Routes
+ */
+Route::prefix('categories')->as('categories')->group(function () {
+    /**
+     * Show all Categories
+     */
+    Route::get(
+        uri: '/',
+        action: CategoriesIndexController::class,
+    )->name('index');
+
+    /**
+     * Get Single Category by key
+     */
+    Route::get(
+        uri: '/{categories:key}',
+        action: CategoriesShowController::class,
+    )->name('show');
+
+    /**
+     * Create Category
+     */
+    Route::post(
+        uri: '/create',
+        action: CategoriesStoreController::class
+    )->name('create');
+
+    /**
+     * Update Category
+     */
+    Route::post(
+        uri: '/update/{categories:key}',
+        action: CategoriesUpdateController::class
+    )->name('update');
+
+    /**
+     * Delete Category
+     */
+    Route::delete(
+        uri: '/delete/{categories:key}',
+        action: CategoriesDeleteController::class
+    )->name('delete');
+});
 
 /**
  * Product Routes
@@ -109,6 +158,9 @@ Route::prefix('carts')->as('carts:')->group(function () {
     Route::delete('{cart::uuid}/coupons/{uuid}', CouponsDeleteController::class)->name('coupons:delete');
 });
 
+/**
+ * Orders Routes
+ */
 Route::prefix('orders')->as('orders:')->group(function () {
     /**
      * Turn a Cart into an Order
