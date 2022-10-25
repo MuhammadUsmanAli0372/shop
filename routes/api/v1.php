@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Api\V1\Auth\LoginController;
+use App\Http\Controllers\Api\V1\Auth\RegisterController;
+use App\Http\Controllers\Api\V1\Auth\UserController;
 use App\Http\Controllers\Api\V1\Carts\Coupons\DeleteController as CouponsDeleteController;
 use App\Http\Controllers\Api\V1\Carts\Coupons\StoreController as CouponsStoreController;
 use App\Http\Controllers\Api\V1\Carts\IndexController;
@@ -23,14 +26,45 @@ use App\Http\Controllers\Api\V1\Wishlists\StoreController as WishlistsStoreContr
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-})->name('auth:me');
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// })->name('auth:me');
+
+Route::prefix('user')->as('user:')->middleware('auth:api')->group(function() {
+    /**
+     * Get User
+     */
+    Route::get(
+        uri: '/me',
+        action: UserController::class
+    )->name('me');
+});
 
 /**
- * Wishlist Routes
+ * Auth Routes
  */
-Route::prefix('categories')->as('categories')->group(function () {
+Route::prefix('auth')->as('auth:')->group(function () {
+    /**
+     * Login User
+     */
+    Route::post(
+        uri: '/login',
+        action: LoginController::class,
+    )->name('login');
+
+    /**
+     * Register User
+     */
+    Route::post(
+        uri: '/register',
+        action: RegisterController::class
+    )->name('register');
+});
+
+/**
+ * Category Routes
+ */
+Route::prefix('categories')->as('categories:')->group(function () {
     /**
      * Show all Categories
      */
@@ -123,7 +157,7 @@ Route::prefix('products')->as('products:')->group(function () {
  */
 Route::prefix('carts')->as('carts:')->group(function () {
     /**
-     * Get the users cart
+     * Get the user cart
      */
     Route::get('/', IndexController::class)->name('index');
 
@@ -145,17 +179,17 @@ Route::prefix('carts')->as('carts:')->group(function () {
     /**
      * Delete Product
      */
-    Route::delete('{cart::uuid}/products/{item:uuid}', DeleteController::class)->name('products:delete');
+    Route::delete('{cart:uuid}/products/{item:uuid}', DeleteController::class)->name('products:delete');
 
     /**
      * Add a coupon to our cart
      */
-    Route::post('{cart::uuid}/coupons', CouponsStoreController::class)->name('coupons:store');
+    Route::post('{cart:uuid}/coupons', CouponsStoreController::class)->name('coupons:store');
 
     /**
      * Remove a coupon to our cart
      */
-    Route::delete('{cart::uuid}/coupons/{uuid}', CouponsDeleteController::class)->name('coupons:delete');
+    Route::delete('{cart:uuid}/coupons', CouponsDeleteController::class)->name('coupons:delete');
 });
 
 /**

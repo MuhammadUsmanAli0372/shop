@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1\Carts\Products;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Api\V1\CartResource;
 use Domains\Customer\Actions\RemoveProductFromCart;
 use Domains\Customer\Events\ProductWasRemoveFromCart;
 use Domains\Customer\Models\Cart;
@@ -22,10 +23,12 @@ class DeleteController extends Controller
             item: $item
         );
 
-        // return response(content: null, status: 202);
+        $cart->refresh();
 
         return new Response(
-            content: null,
+            content: new CartResource(
+                resource: $cart
+            ),
             status: Http::ACCEPTED
         );
     }

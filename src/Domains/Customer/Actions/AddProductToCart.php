@@ -12,6 +12,9 @@ class AddProductToCart
 {
     public static function handle(CartItemValueObject $cartItem, Cart $cart): Model
     {
-        return $cart->items()->create($cartItem->toArray());
+        return $cart->items()->updateOrCreate(
+            ['cart_id' => $cart->id, 'purchasable_id' => $cartItem->purchasableId, 'purchasable_type' => $cartItem->purchasableType],
+            ['quantity' => $cartItem->quantity]
+        );
     }
 }

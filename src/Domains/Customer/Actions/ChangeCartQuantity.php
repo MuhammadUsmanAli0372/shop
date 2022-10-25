@@ -12,27 +12,39 @@ class ChangeCartQuantity
 {
     public static function handle(Cart $cart, CartItem $item, int $quantity = 0): void
     {
-        $aggregate = CartAggregate::retrieve(
-            uuid: $cart->uuid,
-        );
 
-        match (true) {
-            $quantity === 0 => $aggregate->removeProduct(
-                        purchasableID: $item->id,
-                        cartID: $cart->id,
-                        type:  $item::class,
-                    )->persist(),
-            $quantity > $item->quantity => $aggregate->incrementQuantity(
-                        cartID: $cart->id,
-                        quantity:  $quantity,
-                        cartItemID: $item->id,
-                    )->persist(),
-            $quantity < $item->quantity => $aggregate->descreaseQuantity (
-                        cartID: $cart->id,
-                        quantity:  $quantity,
-                        cartItemID: $item->id,
-                    )->persist()
-        };
+        // if quantity equals 0 then remove cart item
+        if ($quantity === 0) {
+            // remove item
+            $item->delete();
+        } else {
+            //update cart item quantity
+            $item->update([
+                'quantity' => $quantity
+            ]);
+        }
+
+        // $aggregate = CartAggregate::retrieve(
+        //     uuid: $cart->uuid,
+        // );
+
+        // match (true) {
+        //     $quantity === 0 => $aggregate->removeProduct(
+        //                 purchasableID: $item->id,
+        //                 cartID: $cart->id,
+        //                 type:  $item::class,
+        //             )->persist(),
+        //     $quantity > $item->quantity => $aggregate->incrementQuantity(
+        //                 cartID: $cart->id,
+        //                 quantity:  $quantity,
+        //                 cartItemID: $item->id,
+        //             )->persist(),
+        //     $quantity < $item->quantity => $aggregate->descreaseQuantity (
+        //                 cartID: $cart->id,
+        //                 quantity:  $quantity,
+        //                 cartItemID: $item->id,
+        //             )->persist()
+        // };
 
         // switch ($quantity) {
         //     case ($quantity === 0):

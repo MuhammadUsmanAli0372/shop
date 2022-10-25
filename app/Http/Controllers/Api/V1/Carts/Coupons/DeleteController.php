@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Api\V1\Carts\Coupons;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Api\V1\CartResource;
 use Domains\Customer\Actions\RemoveCouponFromCart;
 use Domains\Customer\Models\Cart;
 use Domains\Customer\Models\Coupon;
@@ -14,15 +15,15 @@ use JustSteveKing\StatusCode\Http;
 
 class DeleteController extends Controller
 {
-    public function __invoke(Request $request, $cart, string $uuid)
+    public function __invoke(Request $request, Cart $cart)
     {
-        $cart = Cart::query()->where('uuid', $cart)->firstOrFail();
-
-        $coupon = Coupon::query()->where('uuid', $uuid)->firstOrFail();
-
-        if ($cart->coupon !== $coupon->code) {
-            abort(
-                code: Http::NOT_FOUND
+        if ($cart->coupon === null) {
+            // abort(
+            //     code: Http::NOT_FOUND
+            // );
+            return new Response(
+                content: ["msg" => "Coupon is not applied"],
+                status: Http::ACCEPTED
             );
         }
 
@@ -30,8 +31,12 @@ class DeleteController extends Controller
             cart: $cart
         );
 
+        $cart->refresh();
+
         return new Response(
-            content: null,
+            content: new CartResource(
+                resource: $cart
+            ),
             status: Http::ACCEPTED
         );
     }

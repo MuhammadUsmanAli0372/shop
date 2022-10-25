@@ -11,6 +11,7 @@
         "juststeveking/laravel-postcodes": "^2.0",
         "juststeveking/laravel-transporter": "^1.1",
         "laravel/framework": "^9.19",
+        "laravel/passport": "^11.2",
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
         "opcodesio/log-viewer": "^1.2",

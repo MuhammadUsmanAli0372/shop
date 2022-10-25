@@ -24,10 +24,13 @@ class CartResource extends JsonResource
                 'user_id' => $this->user_id,
             ],
             'relationships' => [
+                // 'items' => CartItemResource::collection(
+                //     resource: $this->whenLoaded(
+                //         relationship: 'items',
+                //     ),
+                // ),
                 'items' => CartItemResource::collection(
-                    resource: $this->whenLoaded(
-                        relationship: 'items',
-                    ),
+                    resource: $this->items,
                 ),
             ],
         ];

@@ -30,4 +30,18 @@ class ProductRequest extends FormRequest
             ],
         ];
     }
+
+    /**
+     * Custom message for validation
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'quantity.required' => 'quantity is required!',
+            'purchasable_id.required' => 'purchasable_id is required!',
+            'purchasable_type.required' => 'purchasable_type is required!'
+        ];
+    }
 }
